@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerServiceImpl implements CustomerService{
     @Autowired
@@ -23,5 +25,25 @@ public class CustomerServiceImpl implements CustomerService{
     public boolean isEmailUnique(String email) {
         return !customerRepository.existsByEmail(email);
 
+    }
+
+    @Override
+    public Customer getCustomer(Integer id) {
+        Customer byEmail = customerRepository.findCustomerById(id);
+        return byEmail;
+    }
+
+    @Override
+    public Optional<Customer> getCustomerbyemail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
+    public void updateCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer findCustomerByEmail(String email) {
+        return customerRepository.findCustomerByEmail(email);
     }
 }

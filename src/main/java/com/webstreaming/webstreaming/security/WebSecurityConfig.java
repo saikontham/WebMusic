@@ -33,7 +33,7 @@ public class WebSecurityConfig {
         return
                 http.csrf().disable()
                         .authorizeHttpRequests()
-                        .requestMatchers("/","/register","/login")
+                        .requestMatchers("/**","/register","/login","/api/**")
                         .permitAll()
                         .anyRequest().authenticated()
                         .and()
@@ -42,7 +42,6 @@ public class WebSecurityConfig {
                         .disable().build();
 
     }
-
     @Bean
     public UserDetailsService userDetailsService()
     {

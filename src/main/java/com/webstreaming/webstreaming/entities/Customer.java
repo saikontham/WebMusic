@@ -1,16 +1,20 @@
 package com.webstreaming.webstreaming.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer {
@@ -30,5 +34,34 @@ public class Customer {
     @NotBlank(message = "email is required")
     @Email(message = "Invalid email format")
     private String email;
+
     private String role;
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer")
+
+    private Set<LikedSong> likedSong;
+
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+
+    @JoinTable(
+            name = "customer_playlist",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "playlist_id")
+    )
+    private List<Playlist> playlists;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", likedSong=" + likedSong +
+
+                '}';
+    }
 }

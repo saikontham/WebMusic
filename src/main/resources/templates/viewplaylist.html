@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Playlist Page</title>
+</head>
+<body>
+<h1>Playlists</h1>
+
+<ul>
+    <!-- Iterate over the list of playlists -->
+    <li th:each="playlist : ${playlists}">
+        <!-- Display playlist information -->
+        <p th:text="${playlist.name}"></p>
+        <!-- Add more fields as needed -->
+    </li>
+</ul>
+</body>
+</html>
